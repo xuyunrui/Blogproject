@@ -16,7 +16,10 @@ def index(request):
 def detail(request, pk):
     # get_object_or_404 方法，其作用就是当传入的 pk 对应的 Post 在数据库存在时，就返回对应的 post，如果不存在，就给用户返回一个 404 错误，表明用户请求的文章不存在
     post = get_object_or_404(Post, pk=pk)
-    post.body = markdown.markdown(post.body,
+    
+	post.increase_views() # 调用一次detail视图则调用一次increase_views方法增加views的值
+	
+	post.body = markdown.markdown(post.body,
                                     extensions=[
                                         'markdown.extensions.extra',
                                         'markdown.extensions.codehilite', # 语法高亮拓展
